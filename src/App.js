@@ -1,7 +1,9 @@
+import Grid from "./components/Grid";
+
 function App() {
   return (
     <div className="App">
-        app    
+        <Grid/>
     </div>
   );
 }

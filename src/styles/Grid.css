@@ -1,0 +1,29 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 800px;
+    height: 400px;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(251, 251, 251);
+    background-color: rgb(53, 25, 45);
+    color: white;
+}
+
+.visited {
+    transition-duration: 300ms;
+    background-color: rgb(0, 12, 142);
+}
+
+.best-path {
+    background-color: gold;
+}
+
+.wall {
+    background-color: rgb(175, 3, 3);
+}
