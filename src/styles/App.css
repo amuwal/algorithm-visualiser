@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "VT323", sans-serif;
+    font-size: 1.01em;
+    --background-color: #252832;
+}
+
+.body {
+    background-color: var(--background-color);
+}
+
+a {
+    all: unset;
+}
+
+.App {
+    background-color: var(--background-color);
+}

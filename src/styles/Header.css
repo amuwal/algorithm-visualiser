@@ -1,0 +1,75 @@
+* {
+    /* --purple: rgb(238, 5, 238); */
+    --purple: pink;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.levels-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    justify-content: space-between;
+    padding: 10px;
+    color: white;
+}
+
+.levels {
+    border: 2.5px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.level-active {
+    background-color: var(--purple);
+}
+
+select {
+    border: 1px solid rgba(255, 255, 255, 0.659);
+    width: 200px;
+    text-align: center;
+    background-color: var(--background-color);
+    color: white;
+    padding: 5px 0px 5px 5px;
+}
+
+select:focus-visible {
+    border: none;
+}
+option:focus-visible {
+    border: none;
+}
+
+option {
+    background-color: var(--background-color);
+}
+
+.settings-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+button {
+    outline: none;
+    padding: 10px;
+    background-color: var(--background-color);
+    color: white;
+}
+
+#goToCompareBtn > span {
+    position: relative;
+    background-color: pink;
+    padding: 3px 5px;
+    border-radius: 5px;
+    margin: 5px;
+    bottom: -5px;
+    color: rgb(47, 5, 37);
+}

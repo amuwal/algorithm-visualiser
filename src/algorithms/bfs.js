@@ -7,11 +7,14 @@ const getAdjacent = (r, c) => {
     return [[r, c + 1], [r, c - 1], [r + 1, c], [r - 1, c]]
 }
 
-const bfs = (start, target, rows, cols) => {
+export {str, getAdjacent};
+
+const bfs = (start, target, rows, cols, idPrefix="") => {
 
     const safe = (r, c) => {
         if (!(r >= 0 && r < rows && c >= 0 && c < cols)) return false;
-        const cell = document.getElementById(str([r, c]));
+        const cell = document.getElementById(idPrefix + str([r, c]));
+        if (!cell) return
         return !(cell.classList.contains("wall"))
     };
 
@@ -19,14 +22,16 @@ const bfs = (start, target, rows, cols) => {
     const seen = new Set();
     const stepByStepQueue = [];
     let bestPath = [];
+    const startTime = Date.now();
 
 
     while (state.length){
         let nextState = []
         for (let i = 0; i < state.length; i++){
             const [r, c, path] = state[i];
-            if (seen.has(str([r, c]))) continue;
-            seen.add(str([r, c]));
+            const cur = str([r, c])
+            if (seen.has(cur)) continue;
+            seen.add(cur);
             if (r === target[0] && c === target[1]){
                 found = true;
                 bestPath = [...path];
@@ -42,7 +47,8 @@ const bfs = (start, target, rows, cols) => {
         if (found) break;
         state = nextState;
     }
-    return [stepByStepQueue, bestPath]
+    const finishTime = Date.now();
+    return [stepByStepQueue, bestPath, finishTime - startTime]
 }
 
 export default bfs;
