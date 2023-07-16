@@ -1,29 +1,25 @@
-import { useState } from "react";
 import Grid from "./Grid";
-import UI from "./Ui";
 import Header from "./Header";
 
 const LandingPage = ({
-  handleDensityLevel,
   handleSpeedLevel,
+  handleDensityLevel,
+  setView,
   rows,
   cols,
   speed,
   start,
   target,
-  setTarget,
   setStart,
+  setTarget,
+  handleDfsOnLvl5,
 }) => {
-  const [showGrid, setShowGrid] = useState(false);
-  const [showCompare, setShowCompare] = useState(false);
-
-  return (
-    <div className="LandingPage">
-      {showGrid ? (
-        <>
+    return (
+        <div className="page">
           <Header
             handleDensityLevel={handleDensityLevel}
             handleSpeedLevel={handleSpeedLevel}
+            setView={setView}
           ></Header>
 
           <Grid
@@ -35,18 +31,11 @@ const LandingPage = ({
             target={target}
             setStart={setStart}
             setTarget={setTarget}
+            handleDensityLevel={handleDensityLevel}
+            handleDfsOnLvl5={handleDfsOnLvl5}
           />
-        </>
-      ) : showCompare ? (
-        <UI />
-      ) : (
-        <>
-        <button onClick={() => {setShowGrid(true)}}>Play with algorithms</button>
-        <button onClick={() => {setShowCompare(true)}}>Compare algorithms</button>
-        </>
-      )}
-    </div>
-  );
+        </div>
+    )
 };
 
 export default LandingPage;

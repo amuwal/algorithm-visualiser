@@ -346,9 +346,9 @@ const Grid = ({
       newGrid.firstChild.id = "entry";
     }
 
-    const app = document.querySelector(".App");
-    app.removeChild(app.lastChild);
-    app.appendChild(newGrid);
+    const main = document.querySelector(".main");
+    main.removeChild(main.lastChild);
+    main.appendChild(newGrid);
   }, [rows, speed, start, target]);
 
   const handleWallGeneration = (e) => {
@@ -390,7 +390,7 @@ const Grid = ({
   };
 
   return (
-    <>
+    <div className="main">
       <div className="grid-buttons-container">
         <button id="start-btn" onClick={startProcess}>
           Start
@@ -416,7 +416,7 @@ const Grid = ({
           gridTemplateColumns: "1fr ".repeat(cols),
         }}
       ></div>
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import "../styles/Header.css";
-const Header = ({ handleSpeedLevel, handleDensityLevel }) => {
+const Header = ({ handleSpeedLevel, handleDensityLevel, setView }) => {
   return (
     <div className="header">
       <select defaultValue={"bfs"}>
@@ -60,9 +60,9 @@ const Header = ({ handleSpeedLevel, handleDensityLevel }) => {
       </div>
 
       <button
-      id="goToCompareBtn"
+        id="goToCompareBtn"
         onClick={() => {
-          window.location.href = "/compare";
+          setView("compare");
         }}
       >
         Compare algrithms

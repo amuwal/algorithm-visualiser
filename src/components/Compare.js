@@ -12,6 +12,7 @@ const Compare = ({
   handleSpeedLevel,
   curPreset,
   setCurPreset,
+  setView
 }) => {
   useEffect(() => {
     populateGrid("1");
@@ -169,7 +170,7 @@ const Compare = ({
   };
 
   return (
-    <div className="compare">
+    <div className="compare">   
       <div className="left">
         <select onChange={handleInfoOnAlgorithmChange} id="select-1" defaultValue={"bidirectional-bfs"}>
           <option value="bfs">bfs</option>
@@ -224,8 +225,8 @@ const Compare = ({
         </button>
         <button
           id="visualize-btn"
-          onClick={() => {
-            window.location.href = "/";
+          onClick={() => {  
+            setView("grid");
           }}
         >
           Go back

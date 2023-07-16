@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Compare from "./Compare"
 
-const HandleCompare = ({speed, handleSpeedLevel}) => {
+const HandleCompare = ({speed, handleSpeedLevel, setView}) => {
     const presets = [
         {   
             start: "0-0",
@@ -44,11 +44,11 @@ const HandleCompare = ({speed, handleSpeedLevel}) => {
 
 
     if (curPreset === 0) {
-        return <Compare {...presets[0]} speed={speed} handleSpeedLevel={handleSpeedLevel} setCurPreset={setCurPreset} curPreset={curPreset} />
+        return <Compare {...presets[0]} setView={setView} speed={speed} handleSpeedLevel={handleSpeedLevel} setCurPreset={setCurPreset} curPreset={curPreset} />
     } else if (curPreset === 1) {
-        return <Compare {...presets[1]} speed={speed} handleSpeedLevel={handleSpeedLevel} setCurPreset={setCurPreset} curPreset={curPreset} />
+        return <Compare {...presets[1]} setView={setView} speed={speed} handleSpeedLevel={handleSpeedLevel} setCurPreset={setCurPreset} curPreset={curPreset} />
     } else if (curPreset === 2) {
-        return <Compare {...presets[2]} speed={speed} handleSpeedLevel={handleSpeedLevel} setCurPreset={setCurPreset} curPreset={curPreset}/> 
+        return <Compare {...presets[2]} setView={setView} speed={speed} handleSpeedLevel={handleSpeedLevel} setCurPreset={setCurPreset} curPreset={curPreset}/> 
     }        
 }
 export default HandleCompare;
