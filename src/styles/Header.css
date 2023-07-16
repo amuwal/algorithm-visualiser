@@ -6,6 +6,7 @@
 .header {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
 }
 
 .levels-container {
@@ -72,4 +73,57 @@ button {
     margin: 5px;
     bottom: -5px;
     color: rgb(47, 5, 37);
+}
+
+@media (max-width: 900px) {
+    button {
+        padding: 3px 5px;
+    }
+
+    select {
+        padding: 3px;
+        height: 30px;
+    }
+
+    #goToCompareBtn {
+        height: 30px;
+        padding: 3px;
+    }
+}
+
+@media (max-width: 800px){
+    select {
+        width: 120px;
+    }
+
+    .levels {
+        height: 15px;
+        width: 15px;
+        border: 1.5px solid white;
+    }
+}
+
+@media (max-width: 700px){
+    .levels {
+        height: 12px;
+        width: 12px;
+    }
+    .levels-container {
+        width: 120px;
+    }
+}
+
+@media (max-width: 550px){
+    .levels {
+        height: 8px;
+        width: 8px;
+    }
+    .levels-container {
+        width: 80px;
+    }
+
+    select {
+        width: 100px;
+        padding: 2px;
+    }
 }

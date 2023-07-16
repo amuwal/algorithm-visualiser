@@ -69,6 +69,11 @@ const Compare = ({
     }
   };
 
+  const handleInfoOnAlgorithmChange = (e) => {
+    const id = e.target.id[e.target.id.length - 1]
+    handleInfo(id);
+  }
+
   const startComparison = async () => {
     const btn = document.getElementById("comparison-btn");
     const icon = btn.firstChild;
@@ -166,7 +171,7 @@ const Compare = ({
   return (
     <div className="compare">
       <div className="left">
-        <select id="select-1" defaultValue={"bidirectional-bfs"}>
+        <select onChange={handleInfoOnAlgorithmChange} id="select-1" defaultValue={"bidirectional-bfs"}>
           <option value="bfs">bfs</option>
           <option value="dfs">dfs</option>
           <option value="bidirectional-bfs">bidirectional-bfs</option>
@@ -228,7 +233,7 @@ const Compare = ({
       </div>
 
       <div className="right">
-        <select id="select-2" defaultValue={"dfs"}>
+        <select onChange={handleInfoOnAlgorithmChange} id="select-2" defaultValue={"dfs"}>
           <option value="bfs">bfs</option>
           <option value="dfs">dfs</option>
           <option value="bidirectional-bfs">bidirectional-bfs</option>

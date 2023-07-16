@@ -2,14 +2,6 @@ root {
     --background-color: #252832;
 }
 
-body {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--background-color);
-}
-
 .compare {
     display: flex;
     padding: 10px;
