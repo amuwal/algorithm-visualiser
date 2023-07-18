@@ -1,5 +1,5 @@
 import "../styles/Header.css";
-const Header = ({ handleSpeedLevel, handleDensityLevel, setView }) => {
+const Header = ({ speed, handleSpeedLevel, handleDensityLevel, setView }) => {
   return (
     <div className="header">
       <select defaultValue={"bfs"}>
@@ -13,21 +13,29 @@ const Header = ({ handleSpeedLevel, handleDensityLevel, setView }) => {
         <legend>Speed</legend>
         <div
           onClick={handleSpeedLevel}
-          className="levels level-active"
+          className={speed <= 1000 ? `levels level-active` : "levels"}
           id="speed-1"
         ></div>
         <div
           onClick={handleSpeedLevel}
-          className="levels level-active"
+          className={speed <= 500 ? `levels level-active` : "levels"}
           id="speed-2"
         ></div>
         <div
           onClick={handleSpeedLevel}
-          className="levels level-active"
+          className={speed <= 100 ? `levels level-active` : "levels"}
           id="speed-3"
         ></div>
-        <div onClick={handleSpeedLevel} className="levels" id="speed-4"></div>
-        <div onClick={handleSpeedLevel} className="levels" id="speed-5"></div>
+        <div
+          onClick={handleSpeedLevel}
+          className={speed <= 25 ? `levels level-active` : "levels"}
+          id="speed-4"
+        ></div>
+        <div
+          onClick={handleSpeedLevel}
+          className={speed <= 5 ? `levels level-active` : "levels"}
+          id="speed-5"
+        ></div>
       </div>
 
       <div className="levels-container" id="density-levels">

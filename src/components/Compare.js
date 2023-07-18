@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "../styles/Compare.css";
-import { handleBfs, handleBiDirectionalBfs, handleDfs } from "./Grid";
+import { handleBfs, handleBiDirectionalBfs, handleDfs } from "./HandleAlgorithms";
 
 const Compare = ({
   start,
@@ -17,6 +17,7 @@ const Compare = ({
   useEffect(() => {
     populateGrid("1");
     populateGrid("2");
+
   }, [curPreset]);
 
   const populateGrid = (id) => {
@@ -85,9 +86,14 @@ const Compare = ({
     disableLevels("presets")
     resetGrid();
     await Promise.all([startProcess("1"), startProcess("2")]);
-    btn.removeAttribute("disabled");
-    icon.onclick = null;
-    enableLevels("presets")
+
+    try {
+        btn.removeAttribute("disabled");
+        icon.onclick = null;
+        enableLevels("presets")
+    } catch (error) {
+        // console.log("page was changed mid processing", error);
+    }
   };
 
   const disableLevels = (levelContainerId) => {
@@ -97,7 +103,6 @@ const Compare = ({
       if (btn.classList.contains("levels")){
         btn.onclick = (e) => {e.stopPropagation();};
         btn.style.cursor = "not-allowed";
-        console.log(btn)
 
       }
     })
@@ -159,7 +164,6 @@ const Compare = ({
     const index = +e.target.id[e.target.id.length - 1];
     setCurPreset(index);
     for (let i = 0; i < 2; i++) {
-      console.log("preset-" + index);
       const lvl = document.getElementById("preset-" + i);
       if (i === index) {
         lvl.classList.add("level-active");
@@ -189,26 +193,34 @@ const Compare = ({
       </div>
 
       <div className="mid">
-        <div id="speed-level" className="levels-container">
-          <legend>Speed</legend>
-          <div
-            onClick={handleSpeedLevel}
-            className="levels level-active"
-            id="speed-1"
-          ></div>
-          <div
-            onClick={handleSpeedLevel}
-            className="levels level-active"
-            id="speed-2"
-          ></div>
-          <div
-            onClick={handleSpeedLevel}
-            className="levels level-active"
-            id="speed-3"
-          ></div>
-          <div onClick={handleSpeedLevel} className="levels" id="speed-4"></div>
-          <div onClick={handleSpeedLevel} className="levels" id="speed-5"></div>
-        </div>
+      <div id="speed-levels" className="levels-container">
+        <legend>Speed</legend>
+        <div
+          onClick={handleSpeedLevel}
+          className={speed <= 1000 ? `levels level-active` : "levels"}
+          id="speed-1"
+        ></div>
+        <div
+          onClick={handleSpeedLevel}
+          className={speed <= 500 ? `levels level-active` : "levels"}
+          id="speed-2"
+        ></div>
+        <div
+          onClick={handleSpeedLevel}
+          className={speed <= 100 ? `levels level-active` : "levels"}
+          id="speed-3"
+        ></div>
+        <div
+          onClick={handleSpeedLevel}
+          className={speed <= 25 ? `levels level-active` : "levels"}
+          id="speed-4"
+        ></div>
+        <div
+          onClick={handleSpeedLevel}
+          className={speed <= 5 ? `levels level-active` : "levels"}
+          id="speed-5"
+        ></div>
+      </div>
 
         <div id="presets" className="levels-container">
           <legend>Grid</legend>

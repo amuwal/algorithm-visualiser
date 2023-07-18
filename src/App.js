@@ -4,7 +4,7 @@ import HandleCompare from "./components/HandleCompare";
 import LandingPage from "./components/LandingPage";
 
 function App() {
-  console.log("appRender");
+//   console.log("appRender");
   const [speed, setSpeed] = useState(100);
   const [rows, setRows] = useState(10);
   const [cols, setCols] = useState(30);

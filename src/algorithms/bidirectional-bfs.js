@@ -7,7 +7,7 @@ const bidirectionalBfs = (start, target, rows, cols, idPrefix="") => {
     const safe = (r, c) => {
         if (!(r >= 0 && r < rows && c >= 0 && c < cols)) return false;
         const cell = document.getElementById(idPrefix + str([r, c]));
-        if (!cell) return
+        if (!cell) return ["was inturpted", "-1"]
         return !(cell.classList.contains("wall"))
     };
 

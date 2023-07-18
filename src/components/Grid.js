@@ -1,131 +1,15 @@
 import React, { useEffect } from "react";
 import "../styles/Grid.css";
-import bfs from "../algorithms/bfs";
-import dfs from "../algorithms/dfs";
-import bidirectionalBfs from "../algorithms/bidirectional-bfs";
+import { handleBfs, handleBiDirectionalBfs, handleDfs } from "./HandleAlgorithms";
 
-const sleep = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
 
 const proTips = [
   "<span style='color:pink'> Protip </span>: You can also press Enter key to start visualizing",
   "<span style='color:pink'> Protip </span>: Click on 'Compare algorithms' to compare algorithms side by side",
   "<span style='color:pink'> Protip </span>: Change algorithm from drop down menu",
   "<span style='color:pink'> Protip </span>: You can also change Speed and Grid density by clicking on the circles above",
+  "<span style='color:pink'> Protip </span>: Drag and drop start of finish icons to change their positions.",
 ];
-
-const handleBiDirectionalBfs = async (
-  start,
-  target,
-  rows,
-  cols,
-  speed,
-  idPrefix = ""
-) => {
-  const [stepByStepQueue, bestPath, timeTaken] = bidirectionalBfs(
-    start,
-    target,
-    rows,
-    cols,
-    idPrefix
-  );
-  for (const state of stepByStepQueue) {
-    await sleep(speed);
-    for (const [r, c] of state) {
-      const cell = document.getElementById(idPrefix + `${r}-${c}`);
-      if (!cell) return;
-      cell.classList.add("visited");
-    }
-  }
-  if (!bestPath[0].length) return;
-  const startIcon = document.getElementById(
-    idPrefix + `${start[0]}-${start[1]}`
-  ).firstChild;
-  const targetIcon = document.getElementById(
-    idPrefix + `${target[0]}-${target[1]}`
-  ).firstChild;
-  startIcon.classList.add("icon-active");
-  targetIcon.classList.add("icon-active");
-  for (let i = 0; i < bestPath[0].length; i++) {
-    const [r, c] = bestPath[0][i];
-    await sleep(50);
-    const cell = document.getElementById(idPrefix + `${r}-${c}`);
-    if (!cell) return;
-    cell.classList.add("best-path");
-    if (i === bestPath[1].length) continue;
-    const [tr, tc] = bestPath[1][i];
-    const cell2 = document.getElementById(idPrefix + `${tr}-${tc}`);
-    if (!cell2) return;
-    cell2.classList.add("best-path");
-  }
-  return [timeTaken, bestPath[0].length + bestPath[1].length - 1];
-};
-
-const handleDfs = async (start, target, rows, cols, speed, idPrefix = "") => {
-  const [queue, bestPath, timeTaken] = dfs(start, target, rows, cols, idPrefix);
-  for (const [r, c] of queue) {
-    await sleep(speed);
-    const cell = document.getElementById(idPrefix + `${r}-${c}`);
-    if (!cell) return;
-    cell.classList.add("visited");
-  }
-  const startIcon = document.getElementById(
-    idPrefix + `${start[0]}-${start[1]}`
-  ).firstChild;
-  const targetIcon = document.getElementById(
-    idPrefix + `${target[0]}-${target[1]}`
-  ).firstChild;
-
-  if (!bestPath) return; // all paths blocked
-  startIcon.classList.add("icon-active");
-
-  for (const [r, c] of bestPath) {
-    await sleep(50);
-    const cell = document.getElementById(idPrefix + `${r}-${c}`);
-    if (!cell) return;
-    cell.classList.add("best-path");
-  }
-
-  targetIcon.classList.add("icon-active");
-  return [timeTaken, bestPath.length];
-};
-
-const handleBfs = async (start, target, rows, cols, speed, idPrefix = "") => {
-  const [stepByStepQueue, bestPath, timeTaken] = bfs(
-    start,
-    target,
-    rows,
-    cols,
-    idPrefix
-  );
-  for (const state of stepByStepQueue) {
-    await sleep(speed);
-    for (const [r, c] of state) {
-      const cell = document.getElementById(idPrefix + `${r}-${c}`);
-      if (!cell) return;
-      cell.classList.add("visited");
-    }
-  }
-  if (!bestPath.length) return; // no path found
-
-  const startIcon = document.getElementById(
-    idPrefix + `${start[0]}-${start[1]}`
-  ).firstChild;
-  const targetIcon = document.getElementById(
-    idPrefix + `${target[0]}-${target[1]}`
-  ).firstChild;
-  startIcon.classList.add("icon-active");
-
-  for (const [r, c] of bestPath) {
-    await sleep(50);
-    const cell = document.getElementById(idPrefix + `${r}-${c}`);
-    if (!cell) return;
-    cell.classList.add("best-path");
-  }
-  targetIcon.classList.add("icon-active");
-  return [timeTaken, bestPath.length];
-};
 
 const Grid = ({
   rows,
@@ -145,6 +29,9 @@ const Grid = ({
     window.mousedown = false;
   };
   window.onclick = (e) => {
+    window.mousedown = false;
+  };
+  window.onmouseleave = (e) => {
     window.mousedown = false;
   };
   window.onkeydown = (e) => {
@@ -195,6 +82,8 @@ const Grid = ({
       );
     }
 
+    if (timeTaken === "was inturpted") return 
+
     enableBtnById("start-btn");
     enableBtnById("reset-btn");
     enableLevels("density-levels");
@@ -205,7 +94,7 @@ const Grid = ({
   const showDetails = (timeTaken, pathLength) => {
     const detail = document.createElement("p");
     detail.innerHTML =
-      timeTaken === undefined
+      timeTaken === undefined || timeTaken === "no path"
         ? "It seems there is no path"
         : `completed calculations in <b> ${timeTaken} ms </b> and path-length is <b> ${pathLength} </b>`;
     const info = document.querySelector(".info");
@@ -279,7 +168,7 @@ const Grid = ({
   };
 
   useEffect(() => {
-    console.log("Grid useeffect");
+    // console.log("Grid useeffect");
 
     const newGrid = document.createElement("div");
     newGrid.classList.add("grid");
@@ -309,11 +198,10 @@ const Grid = ({
         cell.classList.add("cell");
         cell.ondragover = allowDrag;
         cell.ondrop = drop;
-        cell.ondragstart = drag;
         cell.onmouseover = handleWallGeneration;
         cell.onmousedown = handleWallGeneration;
         if (cur === start) {
-          const icon = document.createElement("span");
+          const icon = document.createElement("i");
           icon.draggable = "true";
           icon.ondragstart = drag;
           icon.classList.add("material-symbols-outlined");
@@ -380,7 +268,6 @@ const Grid = ({
       return;
     const id = e.dataTransfer.getData("text");
     const element = document.getElementById(id);
-    console.log(element, e.target.id);
     if (element === null) return;
     e.target.appendChild(element);
     if (id === "entry") setStart(e.target.id);
@@ -420,5 +307,4 @@ const Grid = ({
   );
 };
 
-export { handleBfs, handleBiDirectionalBfs, handleDfs, sleep };
 export default Grid;

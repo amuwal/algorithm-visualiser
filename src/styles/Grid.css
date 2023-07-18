@@ -1,5 +1,5 @@
 root {
-    --background-color: #252832;
+    --background-color: #191b23;
 }
 
 body {
@@ -23,13 +23,11 @@ body {
     align-items: center;
     border: 1px solid rgb(255, 255, 255);
     background-color: var(--background-color);
-    transition: 200ms;
 }
 
 .visited {
-    transition-duration: 300ms;
-    padding: 2px;
-    background-color: #cb5fd27e;
+    background-color: #774381;
+    transition: all 0.5s ease-out;
 }
 
 
@@ -40,7 +38,6 @@ body {
 
 .wall {
     background-color: #6ba6de;
-    padding: 2px;
 }
 
 .icon {
